@@ -2,6 +2,9 @@ package com.xebia.entity;
 
 import com.xebia.request.SpaceShipProtocol;
 
+/**
+ * This class represents the Game.
+ */
 public class Game {
 
     String gameId;

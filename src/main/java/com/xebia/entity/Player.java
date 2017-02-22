@@ -57,17 +57,30 @@ public class Player {
         this.fullName = fullName;
     }
 
+    /**
+     * Creates the spaceship fleet and adds it to the board
+     */
     public void createFleet(){
         LOGGER.info("CREATING PLAYER: {} FLEET", this.userId);
-        AngleSpaceShip lSpaceShip = new AngleSpaceShip(this.grid);
-        this.grid.placeSpaceShip(lSpaceShip);
+
+        AngleSpaceShip angleSpaceShip = new AngleSpaceShip(this.grid);
+        this.grid.placeSpaceShip(angleSpaceShip);
+        this.spaceShips.add(angleSpaceShip);
+
         ASpaceShip aSpaceShip = new ASpaceShip(this.grid);
         this.grid.placeSpaceShip(aSpaceShip);
+        this.spaceShips.add(aSpaceShip);
+
         BSpaceShip bSpaceShip = new BSpaceShip(this.grid);
         this.grid.placeSpaceShip(bSpaceShip);
+        this.spaceShips.add(bSpaceShip);
+
         SSpaceShip sSpaceShip = new SSpaceShip(this.grid);
         this.grid.placeSpaceShip(sSpaceShip);
+        this.spaceShips.add(sSpaceShip);
+
         WingerSpaceShip wingerSpaceShip = new WingerSpaceShip(this.grid);
         this.grid.placeSpaceShip(wingerSpaceShip);
+        this.spaceShips.add(wingerSpaceShip);
     }
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 public class GameService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameService.class);
+    public static final String MATCH_PREFIX = "match-";
 
     private Map<String, Game> games = new HashMap<>();
 
@@ -25,7 +26,7 @@ public class GameService {
         Player opponent = new Player(opponentUserId, opponentFullName, new Grid());
 
         StringBuilder gameId = new StringBuilder();
-        gameId.append("match-").append(games.size() + 1);
+        gameId.append(MATCH_PREFIX).append(games.size() + 1);
 
         Game game = new Game(gameId.toString(), self, opponent, spaceShipProtocol);
         games.put(gameId.toString(), game);

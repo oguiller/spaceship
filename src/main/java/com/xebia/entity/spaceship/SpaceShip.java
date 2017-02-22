@@ -66,9 +66,9 @@ public abstract class SpaceShip {
             return false;
         }
 
-//        if ((coordinate.getRow() - this.height < 0) || (coordinate.getColumn() - this.width < 0)) {
-//            return false;
-//        }
+        if ((coordinate.getRow() - this.height < 0) || (coordinate.getColumn() - this.width < 0)) {
+            return false;
+        }
 
         return true;
     }

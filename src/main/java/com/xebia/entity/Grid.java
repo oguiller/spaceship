@@ -1,5 +1,6 @@
 package com.xebia.entity;
 
+import com.xebia.Utils;
 import com.xebia.entity.spaceship.SpaceShip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,10 +89,10 @@ public class Grid {
      */
     private void update(){
         for (Coordinate coord: taken){
-            board[coord.getRow()][coord.getColumn()] = "*";
+            LOGGER.info("COORD: {}", coord);
+            board[coord.getRow() - 1][coord.getColumn() - 1] = "*";
         }
     }
-
 
     public String render() {
         StringBuilder board = new StringBuilder();
@@ -135,9 +136,10 @@ public class Grid {
     public void placeSpaceShip(SpaceShip spaceShip) {
 
         boolean found = false;
-        LOGGER.info("PLACING SHIP ON GRID (FREE {}, TAKEN {})", free.size(), taken.size());
+        LOGGER.debug("PLACING SHIP ON GRID (FREE {}, TAKEN {})", free.size(), taken.size());
 
-        for (Coordinate coord : free) {
+        while(!found) {
+            Coordinate coord = free.get(Utils.getRandomInt(0, free.size()));
             Set<Coordinate> coordinateSet = spaceShip.build(coord);
             if (coordinateSet.size() != 0) {
                 LOGGER.debug("SPACESHIP HAS BEEN BUILT");
@@ -153,11 +155,9 @@ public class Grid {
 
         if(found){
             free.removeAll(spaceShip.getCoordinates());
-        } else {
-            LOGGER.info("NO FREE SPOT AVAILABLE");
         }
 
         this.update();
     }
-    
+
 }
