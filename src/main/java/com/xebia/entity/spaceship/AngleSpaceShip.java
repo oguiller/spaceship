@@ -1,38 +1,34 @@
-package com.xebia.entity;
+package com.xebia.entity.spaceship;
 
-import com.xebia.Utils;
+import com.xebia.entity.Coordinate;
+import com.xebia.entity.Grid;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class LSpaceShip extends SpaceShip {
+/**
+ *          *
+ *          *
+ *          *
+ *          * *
+ */
+public class AngleSpaceShip extends SpaceShip {
 
-    public LSpaceShip(Grid grid) {
+    public AngleSpaceShip(Grid grid) {
         super();
         this.setGrid(grid);
         this.setWidth(3);
         this.setHeight(4);
-        this.setInitialCoordinate();
     }
 
-    private ArrayList<Coordinate> createCoordinates() {
-        return null;
-    }
+    public Set<Coordinate> build(Coordinate initialCoordinate) {
 
-    @Override
-    public void setInitialCoordinate() {
-        Coordinate initialCoordinate = new Coordinate();
+        if(!validateInitialCoordinate(initialCoordinate)){
+            return new HashSet<>();
+        }
 
-        int row = Utils.getRandomInt(0, getGrid().getHeight() - this.getHeight());
-        int column = Utils.getRandomInt(0, getGrid().getWidth() - this.getWidth());
-
-        initialCoordinate.setRow(row);
-        initialCoordinate.setColumn(column);
-
-        this.initialCoordinate = initialCoordinate;
-    }
-
-    public ArrayList<Coordinate> placeSpaceShip() {
-        ArrayList<Coordinate> coordinates = new ArrayList<>(7);
+        Set<Coordinate> coordinates = new HashSet<>();
 
         Coordinate secondPoint = new Coordinate(initialCoordinate.getRow() + 1, initialCoordinate.getColumn());
         Coordinate thirdPoint = new Coordinate(initialCoordinate.getRow() + 2, initialCoordinate.getColumn());

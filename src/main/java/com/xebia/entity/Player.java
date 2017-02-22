@@ -1,5 +1,6 @@
 package com.xebia.entity;
 
+import com.xebia.entity.spaceship.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,6 @@ public class Player {
         this.userId = userId;
         this.fullName = fullName;
         this.grid = grid;
-        this.createFleet();
     }
 
     public Grid getGrid() {
@@ -57,9 +57,17 @@ public class Player {
         this.fullName = fullName;
     }
 
-    private void createFleet(){
+    public void createFleet(){
         LOGGER.info("CREATING PLAYER: {} FLEET", this.userId);
-        this.spaceShips.add(new LSpaceShip(this.grid));
-        this.grid.setSpaceShips(this.spaceShips);
+        AngleSpaceShip lSpaceShip = new AngleSpaceShip(this.grid);
+        this.grid.placeSpaceShip(lSpaceShip);
+        ASpaceShip aSpaceShip = new ASpaceShip(this.grid);
+        this.grid.placeSpaceShip(aSpaceShip);
+        BSpaceShip bSpaceShip = new BSpaceShip(this.grid);
+        this.grid.placeSpaceShip(bSpaceShip);
+        SSpaceShip sSpaceShip = new SSpaceShip(this.grid);
+        this.grid.placeSpaceShip(sSpaceShip);
+        WingerSpaceShip wingerSpaceShip = new WingerSpaceShip(this.grid);
+        this.grid.placeSpaceShip(wingerSpaceShip);
     }
 }

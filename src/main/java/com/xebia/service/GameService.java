@@ -21,6 +21,7 @@ public class GameService {
     public Game createNewGame(String opponentUserId, String opponentFullName, SpaceShipProtocol spaceShipProtocol){
         LOGGER.info("CREATING NEW GAME");
         Player self = new Player("player", "Assesment Player", new Grid());
+        self.createFleet();
         Player opponent = new Player(opponentUserId, opponentFullName, new Grid());
 
         StringBuilder gameId = new StringBuilder();
