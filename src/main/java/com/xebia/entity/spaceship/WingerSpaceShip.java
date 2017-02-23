@@ -1,9 +1,9 @@
 package com.xebia.entity.spaceship;
 
+import com.xebia.Utils;
 import com.xebia.entity.Coordinate;
 import com.xebia.entity.Grid;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +21,7 @@ public class WingerSpaceShip extends SpaceShip {
         this.setGrid(grid);
         this.setWidth(2);
         this.setHeight(5);
+        this.setType("Winger SpaceShip");
     }
 
 
@@ -29,7 +30,7 @@ public class WingerSpaceShip extends SpaceShip {
 
         Set<Coordinate> coordinates = new HashSet<>();
 
-        if(!validateInitialCoordinate(initialCoordinate)){
+        if(!isInitialCoordinateValid(initialCoordinate)){
             return coordinates;
         }
 
@@ -58,6 +59,19 @@ public class WingerSpaceShip extends SpaceShip {
         coordinates.add(point9);
 
         return coordinates;
+    }
+
+    public void rotate(Coordinate initialCoordinate){
+
+        Coordinate centralPoint = new Coordinate(initialCoordinate.getRow() + 2, initialCoordinate.getColumn() +1);
+        Set<Coordinate> newCoordinateSet = new HashSet<>();
+
+        for (Coordinate coordinate : coordinates) {
+            Coordinate rotatedCoordinate = Utils.rotate(centralPoint, coordinate, 90);
+            newCoordinateSet.add(rotatedCoordinate);
+        }
+
+        coordinates = newCoordinateSet;
     }
 
 }

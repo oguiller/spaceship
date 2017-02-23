@@ -1,9 +1,9 @@
 package com.xebia.entity.spaceship;
 
+import com.xebia.Utils;
 import com.xebia.entity.Coordinate;
 import com.xebia.entity.Grid;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,17 +24,14 @@ public class BSpaceShip extends SpaceShip {
         this.setGrid(grid);
         this.setWidth(3);
         this.setHeight(5);
-    }
-
-    private ArrayList<Coordinate> createCoordinates() {
-        return null;
+        this.setType("B SpaceShip");
     }
 
     @Override
     public Set<Coordinate> build(Coordinate initialCoordinate) {
         Set<Coordinate> coordinates = new HashSet<>();
 
-        if(!validateInitialCoordinate(initialCoordinate)){
+        if(!isInitialCoordinateValid(initialCoordinate)){
             return coordinates;
         }
         //First row
@@ -70,22 +67,16 @@ public class BSpaceShip extends SpaceShip {
         return coordinates;
     }
 
-    public ArrayList<Coordinate> placeSpaceShip() {
-        ArrayList<Coordinate> coordinates = new ArrayList<>(7);
+    public void rotate(Coordinate initialCoordinate){
 
-        Coordinate secondPoint = new Coordinate(initialCoordinate.getRow(), initialCoordinate.getColumn() +1);
-        Coordinate thirdPoint = new Coordinate(initialCoordinate.getRow() + 2, initialCoordinate.getColumn());
-        Coordinate fourthPoint = new Coordinate(initialCoordinate.getRow() + 3, initialCoordinate.getColumn());
-        Coordinate fifthPoint = new Coordinate(initialCoordinate.getRow() + 3, initialCoordinate.getColumn() + 1);
-        Coordinate sixthPoint = new Coordinate(initialCoordinate.getRow() + 3, initialCoordinate.getColumn() + 2);
+        Coordinate centralPoint = new Coordinate(initialCoordinate.getRow() + 2, initialCoordinate.getColumn());
+        Set<Coordinate> newCoordinateSet = new HashSet<>();
 
-        coordinates.add(initialCoordinate);
-        coordinates.add(secondPoint);
-        coordinates.add(thirdPoint);
-        coordinates.add(fourthPoint);
-        coordinates.add(fifthPoint);
-        coordinates.add(sixthPoint);
+        for (Coordinate coordinate : coordinates) {
+            Coordinate rotatedCoordinate = Utils.rotate(centralPoint, coordinate, 90);
+            newCoordinateSet.add(rotatedCoordinate);
+        }
 
-        return coordinates;
+        coordinates = newCoordinateSet;
     }
 }

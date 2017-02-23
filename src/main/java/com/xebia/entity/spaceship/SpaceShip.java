@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Set;
 
+//   static factory methods
 public abstract class SpaceShip {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpaceShip.class);
+    private final Logger Logger = LoggerFactory.getLogger(SpaceShip.class);
+
+    private String type;
 
     protected int width;
 
@@ -60,13 +63,13 @@ public abstract class SpaceShip {
 
     public abstract Set<Coordinate> build(Coordinate initialCoordinate);
 
-    public boolean validateInitialCoordinate(Coordinate coordinate) {
-        if ((coordinate.getRow() + this.height > this.grid.getHeight()) || (coordinate.getColumn() + this.width > this.grid.getWidth())) {
-            LOGGER.debug("COORD NON VALID: {}", coordinate);
+    public boolean isInitialCoordinateValid(Coordinate initialCoordinate) {
+        if ((initialCoordinate.getRow() + this.height > this.grid.getHeight()) || (initialCoordinate.getColumn() + this.width > this.grid.getWidth())) {
+            Logger.debug("COORD NON VALID: {}", initialCoordinate);
             return false;
         }
 
-        if ((coordinate.getRow() - this.height < 0) || (coordinate.getColumn() - this.width < 0)) {
+        if ((initialCoordinate.getRow() - this.height < 0) || (initialCoordinate.getColumn() - this.width < 0)) {
             return false;
         }
 
@@ -84,4 +87,15 @@ public abstract class SpaceShip {
     public int getSpaceShipSize(){
         return this.coordinates.size();
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public abstract void rotate(Coordinate initialCoordinate);
+
 }

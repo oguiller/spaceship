@@ -1,23 +1,24 @@
 package com.xebia.entity;
 
 import com.xebia.request.SpaceShipProtocol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class represents the Game.
  */
 public class Game {
 
-    String gameId;
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    SpaceShipProtocol spaceShipProtocol;
+    private String gameId;
 
-    Player self;
+    // I think this should belong to the Opponent
+    private SpaceShipProtocol spaceShipProtocol;
 
-    Player opponent;
+    private Player self;
 
-    public Game(){
-
-    }
+    private Player opponent;
 
     public Game(String gameId, Player self, Player opponent,  SpaceShipProtocol spaceShipProtocol){
         super();

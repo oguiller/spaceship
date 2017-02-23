@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Player {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Player.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     String userId;
 
@@ -19,10 +19,10 @@ public class Player {
 
     List<SpaceShip> spaceShips = new ArrayList<>(5);
 
-    public Player(String userId, String fullName, Grid grid){
+    public Player(String userId, String fullName){
         this.userId = userId;
         this.fullName = fullName;
-        this.grid = grid;
+        this.grid = new Grid();
     }
 
     public Grid getGrid() {
@@ -60,8 +60,10 @@ public class Player {
     /**
      * Creates the spaceship fleet and adds it to the board
      */
+
+    // TODO Refactor method
     public void createFleet(){
-        LOGGER.info("CREATING PLAYER: {} FLEET", this.userId);
+        log.info("CREATING PLAYER: {} FLEET", this.userId);
 
         AngleSpaceShip angleSpaceShip = new AngleSpaceShip(this.grid);
         this.grid.placeSpaceShip(angleSpaceShip);

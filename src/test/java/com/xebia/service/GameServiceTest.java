@@ -2,20 +2,32 @@ package com.xebia.service;
 
 import com.xebia.entity.Game;
 import com.xebia.request.SpaceShipProtocol;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import sun.jvm.hotspot.memory.Space;
 
 public class GameServiceTest {
 
-    @Test
-    public void testCreateGame(){
+    SpaceShipProtocol spaceShipProtocol;
 
-        GameService gameService = new GameService();
-        SpaceShipProtocol spaceShipProtocol = new SpaceShipProtocol();
+    @Before
+    public void setup(){
+        spaceShipProtocol = new SpaceShipProtocol();
         spaceShipProtocol.setHostName("127.0.0.1");
         spaceShipProtocol.setPort(9001);
-        Game game = gameService.createNewGame("whatever","ou yeah!!", spaceShipProtocol);
-        System.out.println(game.getSelf().getGrid().render());
     }
+
+    @Test
+    public void testCreateGame(){
+        GameService gameService = new GameService();
+        String opponentUserId = "test-1";
+        String opponentFullName = "test test";
+
+        Game game = gameService.createNewGame(opponentUserId, opponentFullName, spaceShipProtocol);
+
+        Assert.assertTrue(game.getOpponent().getUserId().equals(opponentUserId));
+        Assert.assertTrue(game.getOpponent().getFullName().equals(opponentFullName));
+        Assert.assertNotNull(game.getSelf());
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.xebia.service;
 
 import com.xebia.entity.Game;
-import com.xebia.entity.Grid;
 import com.xebia.entity.Player;
 import com.xebia.request.SpaceShipProtocol;
 import org.slf4j.Logger;
@@ -19,11 +18,19 @@ public class GameService {
 
     private Map<String, Game> games = new HashMap<>();
 
+    /**
+     * Creates a new Game
+     * @param opponentUserId the UserId of the opponent player
+     * @param opponentFullName the full name of the opponent
+     * @param spaceShipProtocol the spaceShipProtocol
+     * @return
+     */
     public Game createNewGame(String opponentUserId, String opponentFullName, SpaceShipProtocol spaceShipProtocol){
         LOGGER.info("CREATING NEW GAME");
-        Player self = new Player("player", "Assesment Player", new Grid());
+        Player self = new Player("player", "Assesment Player");
         self.createFleet();
-        Player opponent = new Player(opponentUserId, opponentFullName, new Grid());
+
+        Player opponent = new Player(opponentUserId, opponentFullName);
 
         StringBuilder gameId = new StringBuilder();
         gameId.append(MATCH_PREFIX).append(games.size() + 1);

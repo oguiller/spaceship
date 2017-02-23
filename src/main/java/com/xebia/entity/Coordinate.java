@@ -1,6 +1,6 @@
 package com.xebia.entity;
 
-public class Coordinate implements Comparable {
+public class Coordinate {
 
     private int row;
 
@@ -38,6 +38,7 @@ public class Coordinate implements Comparable {
         return getColumn() == that.getColumn();
     }
 
+
     @Override
     public int hashCode() {
         int result = getRow();
@@ -51,10 +52,5 @@ public class Coordinate implements Comparable {
                 "row=" + row +
                 ", column=" + column +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
     }
 }

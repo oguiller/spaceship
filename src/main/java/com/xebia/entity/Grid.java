@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Set;
  */
 public class Grid {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Grid.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private int width = 16;
 
@@ -36,16 +37,6 @@ public class Grid {
         this.height = height;
         board = new String[width][height];
         this.init();
-    }
-
-    private List<SpaceShip> spaceShips = new ArrayList<>(5);
-
-    public List<SpaceShip> getSpaceShips() {
-        return spaceShips;
-    }
-
-    public void setSpaceShips(List<SpaceShip> spaceShips) {
-        this.spaceShips = spaceShips;
     }
 
     public int getWidth() {
@@ -72,6 +63,26 @@ public class Grid {
         this.board = board;
     }
 
+    public List<Coordinate> getTaken() {
+        return taken;
+    }
+
+    public void setTaken(List<Coordinate> taken) {
+        this.taken = taken;
+    }
+
+    public List<Coordinate> getFree() {
+        return free;
+    }
+
+    public void setFree(List<Coordinate> free) {
+        this.free = free;
+    }
+
+    public int getSize(){
+        return width * height;
+    }
+
     /**
      * This method inits the Grid
      */
@@ -89,7 +100,6 @@ public class Grid {
      */
     private void update(){
         for (Coordinate coord: taken){
-            LOGGER.info("COORD: {}", coord);
             board[coord.getRow() - 1][coord.getColumn() - 1] = "*";
         }
     }
@@ -117,11 +127,11 @@ public class Grid {
      * @return
      */
 
-    public boolean areGridCoordinatesAvailableForSpaceShip(Set<Coordinate> coordinates) {
+    private boolean areGridCoordinatesAvailableForSpaceShip(Set<Coordinate> coordinates) {
 
         for (Coordinate coordinate : coordinates) {
             if (taken.contains(coordinate)) {
-                LOGGER.info("Conflicts: {} at position {}", coordinate, taken.indexOf(coordinate));
+                log.info("Conflicts: {} at position {}", coordinate, taken.indexOf(coordinate));
                 return false;
             }
         }
@@ -136,15 +146,21 @@ public class Grid {
     public void placeSpaceShip(SpaceShip spaceShip) {
 
         boolean found = false;
-        LOGGER.debug("PLACING SHIP ON GRID (FREE {}, TAKEN {})", free.size(), taken.size());
+        log.debug("PLACING SHIP ON GRID (FREE {}, TAKEN {})", free.size(), taken.size());
+        Random random = new Random();
+        boolean rotate;
 
         while(!found) {
-            Coordinate coord = free.get(Utils.getRandomInt(0, free.size()));
-            Set<Coordinate> coordinateSet = spaceShip.build(coord);
+            Coordinate initialCoordinate = free.get(Utils.getRandomInt(0, free.size()));
+            Set<Coordinate> coordinateSet = spaceShip.build(initialCoordinate);
             if (coordinateSet.size() != 0) {
-                LOGGER.debug("SPACESHIP HAS BEEN BUILT");
+                rotate = random.nextBoolean();
+
+                if(rotate){
+                    spaceShip.rotate(initialCoordinate);
+                }
+
                 if (areGridCoordinatesAvailableForSpaceShip(coordinateSet)) {
-                    LOGGER.info("**** FOUND *******");
                     found = true;
                     spaceShip.setCoordinates(coordinateSet);
                     taken.addAll(spaceShip.getCoordinates());
@@ -159,5 +175,4 @@ public class Grid {
 
         this.update();
     }
-
 }

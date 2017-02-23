@@ -16,6 +16,13 @@ public class CreateGameResponse {
     @JsonProperty("starting")
     private String starting;
 
+    public CreateGameResponse(String userId, String fullName, String gameId, String starting) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.gameId = gameId;
+        this.starting = starting;
+    }
+
     public String getUserId() {
         return userId;
     }

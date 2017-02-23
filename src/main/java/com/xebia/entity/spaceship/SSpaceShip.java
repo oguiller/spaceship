@@ -1,5 +1,6 @@
 package com.xebia.entity.spaceship;
 
+import com.xebia.Utils;
 import com.xebia.entity.Coordinate;
 import com.xebia.entity.Grid;
 
@@ -20,18 +21,15 @@ public class SSpaceShip extends SpaceShip {
         this.setGrid(grid);
         this.setWidth(4);
         this.setHeight(5);
+        this.setType("S SpaceShip");
     }
-
-//    private Set<Coordinate> createCoordinates() {
-//        return null;
-//    }
 
     @Override
     public Set<Coordinate> build(Coordinate initialCoordinate) {
 
         Set<Coordinate> coordinates = new HashSet<>();
 
-        if(!validateInitialCoordinate(initialCoordinate)){
+        if(!isInitialCoordinateValid(initialCoordinate)){
             return coordinates;
         }
 
@@ -58,5 +56,18 @@ public class SSpaceShip extends SpaceShip {
         coordinates.add(point8);
 
         return coordinates;
+    }
+
+    public void rotate(Coordinate initialCoordinate){
+
+        Coordinate centralPoint = new Coordinate(initialCoordinate.getRow() + 2, initialCoordinate.getColumn());
+        Set<Coordinate> newCoordinateSet = new HashSet<>();
+
+        for (Coordinate coordinate : coordinates) {
+            Coordinate rotatedCoordinate = Utils.rotate(centralPoint, coordinate, 90);
+            newCoordinateSet.add(rotatedCoordinate);
+        }
+
+        coordinates = newCoordinateSet;
     }
 }
