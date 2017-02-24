@@ -5,8 +5,6 @@ import com.xebia.entity.spaceship.SpaceShip;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Set;
-
 public class GridTest {
 
     @Test
@@ -18,10 +16,9 @@ public class GridTest {
     @Test
     public void testAreGridCoordinatesAvailableForSpaceShip(){
         Grid grid = new Grid();
-        SpaceShip angleSpaceShip = new AngleSpaceShip(grid);
+        SpaceShip angleSpaceShip = new AngleSpaceShip();
         Coordinate initialCoordinate = new Coordinate(5, 7);
-        Set<Coordinate> coordinateSet = angleSpaceShip.build(initialCoordinate);
-        angleSpaceShip.setCoordinates(coordinateSet);
+        angleSpaceShip.build(initialCoordinate);
         grid.placeSpaceShip(angleSpaceShip);
 
         Assert.assertTrue(grid.getFree().size() == (grid.getSize() - angleSpaceShip.getCoordinates().size()));

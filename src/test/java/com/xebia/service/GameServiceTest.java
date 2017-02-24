@@ -28,6 +28,7 @@ public class GameServiceTest {
         Assert.assertTrue(game.getOpponent().getUserId().equals(opponentUserId));
         Assert.assertTrue(game.getOpponent().getFullName().equals(opponentFullName));
         Assert.assertNotNull(game.getSelf());
+
     }
 
 }

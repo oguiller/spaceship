@@ -1,7 +1,6 @@
 package com.xebia.entity.spaceship;
 
 import com.xebia.entity.Coordinate;
-import com.xebia.entity.Grid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +19,6 @@ public abstract class SpaceShip {
     protected int height;
 
     protected Coordinate initialCoordinate;
-
-    protected Grid grid;
 
     protected Set<Coordinate> coordinates = new HashSet<>();
 
@@ -53,28 +50,7 @@ public abstract class SpaceShip {
         this.coordinates = coordinates;
     }
 
-    public Grid getGrid() {
-        return grid;
-    }
-
-    public void setGrid(Grid grid) {
-        this.grid = grid;
-    }
-
-    public abstract Set<Coordinate> build(Coordinate initialCoordinate);
-
-    public boolean isInitialCoordinateValid(Coordinate initialCoordinate) {
-        if ((initialCoordinate.getRow() + this.height > this.grid.getHeight()) || (initialCoordinate.getColumn() + this.width > this.grid.getWidth())) {
-            Logger.debug("COORD NON VALID: {}", initialCoordinate);
-            return false;
-        }
-
-        if ((initialCoordinate.getRow() - this.height < 0) || (initialCoordinate.getColumn() - this.width < 0)) {
-            return false;
-        }
-
-        return true;
-    }
+    public abstract void build(Coordinate initialCoordinate);
 
     public int getLifes(){
         return this.coordinates.size();
@@ -98,4 +74,14 @@ public abstract class SpaceShip {
 
     public abstract void rotate(Coordinate initialCoordinate);
 
+    @Override
+    public String toString() {
+        return "SpaceShip{" +
+                "type='" + type + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", initialCoordinate=" + initialCoordinate +
+                ", coordinates=" + coordinates +
+                '}';
+    }
 }
