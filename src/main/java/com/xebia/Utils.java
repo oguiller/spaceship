@@ -3,8 +3,11 @@ package com.xebia;
 import com.xebia.entity.Coordinate;
 import com.xebia.entity.spaceship.SpaceShip;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -45,4 +48,20 @@ public class Utils {
 
         System.out.println(board.toString());
     }
+
+    public static List<Coordinate> toCoordinates(List<String> salvo){
+        List<Coordinate> coordinates = new ArrayList<>();
+        String pattern = "[a-f[0-9]]x[a-f[0-9]]";
+        Pattern p = Pattern.compile(pattern);
+
+        for(String position: salvo){
+            if(Pattern.matches(pattern, position)){
+                String[] point = position.split("x");
+                coordinates.add(new Coordinate(Integer.parseInt(point[0], 16), (Integer.parseInt(point[1], 16))));
+            }
+        }
+
+        return coordinates;
+    }
+
 }

@@ -53,4 +53,8 @@ public class Coordinate {
                 ", column=" + column +
                 '}';
     }
+
+    public String toHexDec(){
+        return Integer.toHexString(row) +"x"+ Integer.toHexString(column);
+    }
 }

@@ -5,9 +5,7 @@ import com.xebia.entity.spaceship.SpaceShip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This class is responsible for displaying the board game
@@ -139,7 +137,6 @@ public class Grid {
 
         for (Coordinate coordinate : spaceShip.getCoordinates()) {
             if (taken.contains(coordinate)) {
-                log.info("Conflicts: {} at position {}", coordinate, taken.indexOf(coordinate));
                 return false;
             }
         }
@@ -196,7 +193,28 @@ public class Grid {
             free.removeAll(spaceShip.getCoordinates());
         }
 
-        this.update();
+//        this.update();
+    }
+
+    public Map<Coordinate, StrikeType> gettingFired(List<Coordinate> salvoCoordinates){
+        Map<Coordinate, StrikeType> results = new HashMap<>();
+
+        // Hitting spaceships
+        for(SpaceShip spaceShip : this.spaceShips){
+            results.putAll(spaceShip.gettingFired(salvoCoordinates));
+        }
+
+        updateGrid(results.keySet());
+
+        return results;
+    }
+
+    private void updateGrid(Set<Coordinate> coordinates) {
+        // updatingGrid
+        for(Coordinate coordinate: coordinates){
+            taken.remove(coordinate);
+            free.add(coordinate);
+        }
     }
 
 }

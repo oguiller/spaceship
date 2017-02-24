@@ -1,11 +1,11 @@
 package com.xebia.entity.spaceship;
 
 import com.xebia.entity.Coordinate;
+import com.xebia.entity.StrikeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 //   static factory methods
 public abstract class SpaceShip {
@@ -17,8 +17,6 @@ public abstract class SpaceShip {
     protected int width;
 
     protected int height;
-
-    protected Coordinate initialCoordinate;
 
     protected Set<Coordinate> coordinates = new HashSet<>();
 
@@ -36,10 +34,6 @@ public abstract class SpaceShip {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public Coordinate getInitialCoordinate() {
-        return initialCoordinate;
     }
 
     public Set<Coordinate> getCoordinates() {
@@ -74,13 +68,38 @@ public abstract class SpaceShip {
 
     public abstract void rotate(Coordinate initialCoordinate);
 
+
+    //TODO Refactor
+    public Map<Coordinate, StrikeType> gettingFired(List<Coordinate> salvoCoordinates){
+        Set<Coordinate> coordinates = this.getCoordinates();
+        Map<Coordinate, StrikeType> results = new HashMap<>();
+
+        for(Coordinate salvoCoordinate: salvoCoordinates){
+            if(coordinates.contains(salvoCoordinate)){
+                if(this.getLives() == 1){
+                    // kill
+                    results.put(salvoCoordinate, StrikeType.KILL);
+                } else {
+                    // hit
+                    results.put(salvoCoordinate, StrikeType.HIT);
+                }
+                this.coordinates.remove(salvoCoordinate);
+            }
+        }
+
+        return results;
+    }
+
+    private int getLives() {
+        return this.coordinates.size();
+    }
+
     @Override
     public String toString() {
         return "SpaceShip{" +
                 "type='" + type + '\'' +
                 ", width=" + width +
                 ", height=" + height +
-                ", initialCoordinate=" + initialCoordinate +
                 ", coordinates=" + coordinates +
                 '}';
     }

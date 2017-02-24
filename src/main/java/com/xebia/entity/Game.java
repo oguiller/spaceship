@@ -20,6 +20,8 @@ public class Game {
 
     private Player opponent;
 
+    private boolean turn;
+
     public Game(String gameId, Player self, Player opponent,  SpaceShipProtocol spaceShipProtocol){
         super();
         this.gameId = gameId;
@@ -58,5 +60,13 @@ public class Game {
 
     public void setSpaceShipProtocol(SpaceShipProtocol spaceShipProtocol) {
         this.spaceShipProtocol = spaceShipProtocol;
+    }
+
+    public void updateTurn(){
+        turn = !turn;
+    }
+
+    public Player getPlayerTurn(){
+        return turn ? self : opponent;
     }
 }

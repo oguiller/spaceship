@@ -23,4 +23,13 @@ public class CoordinateTest {
         coordinateSet.add(coordinate1);
         Assert.assertTrue(coordinateSet.contains(coordinate2));
     }
+
+    @Test
+    public void testToHexDec(){
+        Set<Coordinate> coordinateSet = new HashSet<>();
+        Coordinate coordinate1 = new Coordinate(10,1);
+        Coordinate coordinate2 = new Coordinate(15,9);
+        System.out.println(coordinate1.toHexDec());
+        System.out.println(coordinate2.toHexDec());
+    }
 }
